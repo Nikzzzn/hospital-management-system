@@ -2,6 +2,7 @@ package com.nikzzzn.hospitalserver.controller;
 
 import com.nikzzzn.hospitalserver.model.Appointment;
 import com.nikzzzn.hospitalserver.model.Doctor;
+import com.nikzzzn.hospitalserver.model.Patient;
 import com.nikzzzn.hospitalserver.service.AppointmentService;
 import com.nikzzzn.hospitalserver.service.DoctorService;
 import com.nikzzzn.hospitalserver.service.PatientService;
@@ -11,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -33,14 +35,12 @@ public class AppointmentController {
     @Autowired
     private SpecialtyService specialtyService;
 
-    @GetMapping(value = {"/", "/index"})
-    public List<Appointment> showPatients(Model model){
-        List<Appointment> listOfAppointments = appointmentService.findAll();
-
-        return listOfAppointments;
+    @GetMapping("/")
+    public List<Appointment> getAppointments(){
+        return appointmentService.findAll();
     }
 
-    @GetMapping("/new_appointment")
+    /*@GetMapping("/new_appointment")
     public String showNewAppointmentPage(Model model){
         Appointment appointment = new Appointment();
         model.addAttribute("appointment", appointment);
@@ -48,42 +48,18 @@ public class AppointmentController {
         model.addAttribute("listOfSpecialties", specialtyService.findAll());
 
         return "new_appointment";
-    }
+    }*/
 
-    @RequestMapping("/new_appointment_doctor")
-    public String postNewAppointmentChooseDoctorPage(Model model,
-                                                     @ModelAttribute("appointment") Appointment appointment,
-                                                     @RequestParam String chosenSpecialty){
-        List<Doctor> listOfDoctors = doctorService.findBySpecialtyId(Integer.parseInt(chosenSpecialty));
-        Map<Integer, List<String>> doctorsAndHours = new Hashtable<>();
-        Stream<LocalTime> beforeLunchTime = Stream.iterate(LocalTime.of(9, 0),
-                                                           t -> t.plusMinutes(30))
-                                                  .limit(8);
-        Stream<LocalTime> afterLunchTime = Stream.iterate(LocalTime.of(14, 0),
-                                                          t -> t.plusMinutes(30))
-                                                 .limit(8);
-        List<LocalTime> allAvailableHours = Stream.concat(beforeLunchTime, afterLunchTime).toList();
-        for(Doctor d : listOfDoctors){
-            List<LocalTime> availableHours = new ArrayList<>(allAvailableHours);
-            List<Appointment> bookedAppointments =
-                    appointmentService.findAllByDoctorIdAndDate(d.getId(), appointment.getAppointmentDate());
-            for(Appointment a : bookedAppointments){
-                availableHours.removeIf(t -> t.equals(a.getAppointmentTime()));
-            }
-            doctorsAndHours.put(d.getId(), availableHours.stream().map(LocalTime::toString).toList());
-        }
-        model.addAttribute(appointment);
-        model.addAttribute("listOfDoctors",listOfDoctors);
-        model.addAttribute("doctorsAndHours",doctorsAndHours);
-
-        return "new_appointment_doctor";
-    }
-
-    @PostMapping("/save_appointment")
-    public String saveAppointment(@ModelAttribute("appointment") Appointment appointment) {
+    @RequestMapping("/save_appointment")
+    public void saveAppointment(@RequestParam Integer doctorId,
+                                @RequestParam Integer patientId,
+                                @RequestParam LocalDate date,
+                                @RequestParam LocalTime time) {
+        Doctor doctor = doctorService.findById(doctorId);
+        Patient patient = patientService.findById(patientId);
+        Appointment appointment = new Appointment(0, doctor, patient, date, time);
         appointmentService.saveAppointment(appointment);
-
-        return "redirect:/";
+        System.out.println("post");
     }
 
     @GetMapping("/edit_appointment/{id}")

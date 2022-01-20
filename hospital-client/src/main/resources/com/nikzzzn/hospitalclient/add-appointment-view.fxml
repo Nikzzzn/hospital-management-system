@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="410.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nikzzzn.hospitalclient.controller.AddAppointmentController">
+   <children>
+      <VBox layoutX="111.0" layoutY="135.0" prefHeight="93.0" prefWidth="420.0">
+         <children>
+            <HBox prefHeight="15.0" prefWidth="437.0">
+               <children>
+                  <Label prefHeight="69.0" prefWidth="287.0" text="Patient name:">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="comboBoxPatient" prefWidth="150.0" />
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </HBox>
+            <HBox prefHeight="7.0" prefWidth="437.0">
+               <children>
+                  <Label prefHeight="27.0" prefWidth="287.0" text="Choose a doctor specialty:">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="comboBoxSpecialty" prefWidth="150.0" />
+               </children>
+               <VBox.margin>
+                  <Insets top="30.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox prefHeight="8.0" prefWidth="437.0">
+               <children>
+                  <Label prefHeight="27.0" prefWidth="311.0" text="Date:">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <DatePicker fx:id="datePicker" />
+               </children>
+               <VBox.margin>
+                  <Insets top="30.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+      <Label layoutX="211.0" layoutY="33.0" text="Add new appointment" AnchorPane.topAnchor="30.0">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <Button layoutX="282.0" layoutY="326.0" mnemonicParsing="false" onAction="#btnContinueClick" text="Continue" AnchorPane.bottomAnchor="50.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

@@ -10,18 +10,15 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
-@Controller
+@RestController
 public class PatientController {
 
     @Autowired
     private PatientService patientService;
 
     @GetMapping("/patients")
-    public String showPatients(Model model){
-        List<Patient> listOfPatients = patientService.findAll();
-        model.addAttribute("listOfPatients", listOfPatients);
-
-        return "patients";
+    public List<Patient> getPatients(){
+        return patientService.findAll();
     }
 
     @GetMapping("/new_patient")
