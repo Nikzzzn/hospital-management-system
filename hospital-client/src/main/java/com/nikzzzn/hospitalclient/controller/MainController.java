@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class MainController implements Initializable {
+public class MainController extends MenuController implements Initializable {
 
     @FXML private TableView<Appointment> appointmentsTable;
     @FXML private TableColumn<Appointment, Integer> columnId;
@@ -74,8 +74,8 @@ public class MainController implements Initializable {
         fxmlLoader.setController(continueController);
         try {
             Scene scene = new Scene(fxmlLoader.load());
-            EditAppointmentController controller = fxmlLoader.getController();
-            controller.setAppointment(appointment);
+            //EditAppointmentController controller = fxmlLoader.getController();
+            //controller.setAppointment(appointment);
             stage.setTitle("Hospital");
             stage.setScene(scene);
             stage.setResizable(false);

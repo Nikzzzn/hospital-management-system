@@ -3,6 +3,8 @@ package com.nikzzzn.hospitalclient.controller;
 import com.nikzzzn.hospitalclient.MainApplication;
 import com.nikzzzn.hospitalclient.helper.Connector;
 import com.nikzzzn.hospitalclient.helper.FxUtil;
+import com.nikzzzn.hospitalclient.model.Appointment;
+import com.nikzzzn.hospitalclient.model.Doctor;
 import com.nikzzzn.hospitalclient.model.Patient;
 import com.nikzzzn.hospitalclient.model.Specialty;
 import javafx.event.ActionEvent;
@@ -13,38 +15,34 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DateCell;
-import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputControl;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class AddAppointmentController extends MenuController implements Initializable {
+public class AddDoctorController extends MenuController implements Initializable {
 
     @FXML
-    private ComboBox<Patient> comboBoxPatient;
+    private TextField textFieldName;
 
     @FXML
     private ComboBox<Specialty> comboBoxSpecialty;
 
-    @FXML
-    private DatePicker datePicker;
-
-    public void btnContinueClick(ActionEvent event) throws IOException {
-        Patient patient = comboBoxPatient.getValue();
+    public void btnAddClick(ActionEvent event) throws IOException {
+        String name = textFieldName.getText();
         Specialty specialty = comboBoxSpecialty.getValue();
-        LocalDate date = datePicker.getValue();
+        Doctor doctor = new Doctor(0, name, specialty);
+        Connector.saveDoctor(doctor);
 
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("add-appointment-continue-view.fxml"));
-        AddAppointmentContinueController continueController = new AddAppointmentContinueController();
-        continueController.initializeElements(patient, specialty, date);
-        fxmlLoader.setController(continueController);
-
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("doctors-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         stage.setTitle("Hospital");
@@ -55,21 +53,7 @@ public class AddAppointmentController extends MenuController implements Initiali
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        FxUtil.autoCompleteComboBoxPlus(comboBoxPatient, (typedText, itemToCompare) -> itemToCompare.name.toLowerCase().contains(typedText.toLowerCase()));
         FxUtil.autoCompleteComboBoxPlus(comboBoxSpecialty, (typedText, itemToCompare) -> itemToCompare.name.toLowerCase().contains(typedText.toLowerCase()));
-
-        comboBoxPatient.setConverter(new StringConverter<>() {
-            @Override
-            public String toString(Patient object) {
-                return object != null ? object.name : "";
-            }
-
-            @Override
-            public Patient fromString(String string) {
-                return comboBoxPatient.getItems().stream().filter(object ->
-                        object.name.equals(string)).findFirst().orElse(null);
-            }
-        });
 
         comboBoxSpecialty.setConverter(new StringConverter<>() {
             @Override
@@ -84,21 +68,12 @@ public class AddAppointmentController extends MenuController implements Initiali
             }
         });
 
-        datePicker.setDayCellFactory(picker -> new DateCell() {
-            public void updateItem(LocalDate date, boolean empty) {
-                super.updateItem(date, empty);
-                LocalDate today = LocalDate.now();
-                setDisable(empty || date.compareTo(today) < 0);
-            }
-        });
-
         try {
-            List<Patient> listOfPatients = Connector.getPatients().orElse(new ArrayList<>());
             List<Specialty> listOfSpecialties = Connector.getSpecialties().orElse(new ArrayList<>());
-            comboBoxPatient.getItems().addAll(listOfPatients);
             comboBoxSpecialty.getItems().addAll(listOfSpecialties);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 }

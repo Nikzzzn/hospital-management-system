@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class EditAppointmentController implements Initializable {
+public class EditAppointmentController extends MenuController implements Initializable {
 
     private Appointment appointment;
 

@@ -50,7 +50,7 @@ public class AppointmentController {
         return "new_appointment";
     }*/
 
-    @RequestMapping("/save_appointment")
+    @PostMapping("/save_appointment")
     public void saveAppointment(@RequestParam Integer id,
                                 @RequestParam Integer doctorId,
                                 @RequestParam Integer patientId,

@@ -13,6 +13,24 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="410.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nikzzzn.hospitalclient.controller.AddAppointmentController">
    <children>
+      <MenuBar fx:id="menuBar" prefHeight="25.0" prefWidth="640.0">
+         <menus>
+            <Menu mnemonicParsing="false" text="Data">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#menuAppointmentsClicked" text="Appointments" />
+                  <MenuItem mnemonicParsing="false" onAction="#menuDoctorsClicked" text="Doctors" />
+                  <MenuItem mnemonicParsing="false" onAction="#menuPatientsClicked" text="Patients" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Add">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#menuAddAppointmentClicked" text="New appointment" />
+                  <MenuItem mnemonicParsing="false" onAction="#menuAddDoctorClicked" text="New doctor" />
+                  <MenuItem mnemonicParsing="false" onAction="#menuAddPatientClicked" text="New patient" />
+               </items>
+            </Menu>
+         </menus>
+      </MenuBar>
       <VBox layoutX="111.0" layoutY="135.0" prefHeight="93.0" prefWidth="420.0">
          <children>
             <HBox prefHeight="15.0" prefWidth="437.0">
@@ -56,7 +74,7 @@
             </HBox>
          </children>
       </VBox>
-      <Label layoutX="211.0" layoutY="33.0" text="Add new appointment" AnchorPane.topAnchor="30.0">
+      <Label layoutX="211.0" layoutY="33.0" text="Add new appointment" AnchorPane.topAnchor="55.0">
          <font>
             <Font size="22.0" />
          </font>

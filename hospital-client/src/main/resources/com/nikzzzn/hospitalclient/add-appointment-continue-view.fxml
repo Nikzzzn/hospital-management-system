@@ -10,6 +10,24 @@
 
 <AnchorPane prefHeight="410.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
+      <MenuBar fx:id="menuBar" prefHeight="25.0" prefWidth="640.0">
+         <menus>
+            <Menu mnemonicParsing="false" text="Data">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#menuAppointmentsClicked" text="Appointments" />
+                  <MenuItem mnemonicParsing="false" onAction="#menuDoctorsClicked" text="Doctors" />
+                  <MenuItem mnemonicParsing="false" onAction="#menuPatientsClicked" text="Patients" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Add">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#menuAddAppointmentClicked" text="New appointment" />
+                  <MenuItem mnemonicParsing="false" onAction="#menuAddDoctorClicked" text="New doctor" />
+                  <MenuItem mnemonicParsing="false" onAction="#menuAddPatientClicked" text="New patient" />
+               </items>
+            </Menu>
+         </menus>
+      </MenuBar>
       <VBox layoutX="110.0" layoutY="163.0" prefHeight="67.0" prefWidth="420.0">
          <children>
             <HBox prefHeight="0.0" prefWidth="442.0">
@@ -42,7 +60,7 @@
             <Font size="14.0" />
          </font>
       </Button>
-      <Label layoutX="211.0" layoutY="28.0" text="Add new appointment" AnchorPane.topAnchor="30.0">
+      <Label layoutX="211.0" layoutY="28.0" text="Add new appointment" AnchorPane.topAnchor="55.0">
          <font>
             <Font size="22.0" />
          </font>

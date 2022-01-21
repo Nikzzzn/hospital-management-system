@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-public class EditAppointmentContinueController implements Initializable {
+public class EditAppointmentContinueController extends MenuController implements Initializable {
 
     private Map<Integer, List<LocalTime>> availableDoctors;
     private Appointment appointment;

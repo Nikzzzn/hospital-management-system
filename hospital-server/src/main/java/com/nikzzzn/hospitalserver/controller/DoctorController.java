@@ -2,6 +2,7 @@ package com.nikzzzn.hospitalserver.controller;
 
 import com.nikzzzn.hospitalserver.model.Appointment;
 import com.nikzzzn.hospitalserver.model.Doctor;
+import com.nikzzzn.hospitalserver.model.Specialty;
 import com.nikzzzn.hospitalserver.service.AppointmentService;
 import com.nikzzzn.hospitalserver.service.DoctorService;
 import com.nikzzzn.hospitalserver.service.SpecialtyService;
@@ -13,10 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Stream;
 
 @RestController
@@ -79,11 +77,13 @@ public class DoctorController {
         return "new_doctor";
     }
 
-    @PostMapping(value = "/save_doctor")
-    public String saveDoctor(@ModelAttribute("doctor") Doctor doctor) {
+    @PostMapping("/save_doctor")
+    public void saveDoctor(@RequestParam Integer id,
+                           @RequestParam String name,
+                           @RequestParam Integer specialtyId) {
+        Specialty specialty = specialtyService.findById(specialtyId);
+        Doctor doctor = new Doctor(id, name, specialty, new HashSet<>());
         doctorService.saveDoctor(doctor);
-
-        return "redirect:/doctors";
     }
 
     @GetMapping("/edit_doctor/{id}")
@@ -97,9 +97,8 @@ public class DoctorController {
     }
 
     @GetMapping("/delete_doctor/{id}")
-    public String deleteDoctor(@PathVariable(name = "id") int id) {
+    public void deleteDoctor(@PathVariable(name = "id") int id) {
         doctorService.deleteDoctor(id);
-        return "redirect:/doctors";
     }
 
     @PostMapping("/doctor_search")

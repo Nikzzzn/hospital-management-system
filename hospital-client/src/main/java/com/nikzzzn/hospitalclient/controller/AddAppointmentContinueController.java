@@ -25,7 +25,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
 
-public class AddAppointmentContinueController implements Initializable {
+public class AddAppointmentContinueController extends MenuController implements Initializable {
 
     private Map<Integer, List<LocalTime>> availableDoctors;
     private Patient patient;

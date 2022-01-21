@@ -17,4 +17,8 @@ public class SpecialtyService {
         return specialtyRepository.findAll();
     }
 
+    public Specialty findById(Integer id){
+        return specialtyRepository.findById(id).orElse(new Specialty());
+    }
+
 }
