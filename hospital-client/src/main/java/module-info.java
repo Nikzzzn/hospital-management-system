@@ -7,7 +7,6 @@ module com.nikzzzn.hospitalclient {
     requires org.apache.httpcomponents.httpclient;
 
     opens com.nikzzzn.hospitalclient to javafx.fxml;
-    opens com.nikzzzn.hospitalclient.holder to javafx.base;
     exports com.nikzzzn.hospitalclient;
     exports com.nikzzzn.hospitalclient.model to com.fasterxml.jackson.databind;
     exports com.nikzzzn.hospitalclient.controller;

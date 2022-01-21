@@ -3,6 +3,7 @@ package com.nikzzzn.hospitalclient.controller;
 import com.nikzzzn.hospitalclient.MainApplication;
 import com.nikzzzn.hospitalclient.helper.Connector;
 import com.nikzzzn.hospitalclient.helper.FxUtil;
+import com.nikzzzn.hospitalclient.model.Appointment;
 import com.nikzzzn.hospitalclient.model.Patient;
 import com.nikzzzn.hospitalclient.model.Specialty;
 import javafx.event.ActionEvent;
@@ -11,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
@@ -24,7 +26,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class AddAppointmentController implements Initializable {
+public class EditAppointmentController implements Initializable {
+
+    private Appointment appointment;
 
     @FXML
     private ComboBox<Patient> comboBoxPatient;
@@ -36,13 +40,13 @@ public class AddAppointmentController implements Initializable {
     private DatePicker datePicker;
 
     public void btnContinueClick(ActionEvent event) throws IOException {
-        Patient patient = comboBoxPatient.getValue();
+        appointment.patient = comboBoxPatient.getValue();
+        appointment.date = datePicker.getValue();
         Specialty specialty = comboBoxSpecialty.getValue();
-        LocalDate date = datePicker.getValue();
 
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("add-appointment-continue-view.fxml"));
-        AddAppointmentContinueController continueController = new AddAppointmentContinueController();
-        continueController.initializeElements(patient, specialty, date);
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("edit-appointment-continue-view.fxml"));
+        EditAppointmentContinueController continueController = new EditAppointmentContinueController();
+        continueController.initializeElements(appointment, specialty);
         fxmlLoader.setController(continueController);
 
         Scene scene = new Scene(fxmlLoader.load());
@@ -51,6 +55,21 @@ public class AddAppointmentController implements Initializable {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
+    }
+
+    public void btnDeleteClick(ActionEvent event) throws IOException {
+        Connector.deleteAppointment(appointment);
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("main-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        stage.setTitle("Hospital");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
+
+    public void setAppointment(Appointment appointment){
+        this.appointment = appointment;
     }
 
     @Override
@@ -100,5 +119,10 @@ public class AddAppointmentController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        comboBoxPatient.setValue(appointment.patient);
+        comboBoxSpecialty.setValue(appointment.doctor.specialty);
+        datePicker.setValue(appointment.date);
     }
+
 }

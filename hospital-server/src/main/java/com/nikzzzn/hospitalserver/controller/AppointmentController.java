@@ -51,15 +51,15 @@ public class AppointmentController {
     }*/
 
     @RequestMapping("/save_appointment")
-    public void saveAppointment(@RequestParam Integer doctorId,
+    public void saveAppointment(@RequestParam Integer id,
+                                @RequestParam Integer doctorId,
                                 @RequestParam Integer patientId,
                                 @RequestParam LocalDate date,
                                 @RequestParam LocalTime time) {
         Doctor doctor = doctorService.findById(doctorId);
         Patient patient = patientService.findById(patientId);
-        Appointment appointment = new Appointment(0, doctor, patient, date, time);
+        Appointment appointment = new Appointment(id, doctor, patient, date, time);
         appointmentService.saveAppointment(appointment);
-        System.out.println("post");
     }
 
     @GetMapping("/edit_appointment/{id}")
@@ -74,9 +74,8 @@ public class AppointmentController {
     }
 
     @GetMapping("/delete_appointment/{id}")
-    public String deleteAppointment(@PathVariable(name = "id") int id) {
+    public void deleteAppointment(@PathVariable(name = "id") int id) {
         appointmentService.deleteAppointment(id);
-        return "redirect:/";
     }
 
 }

@@ -1,9 +1,7 @@
 package com.nikzzzn.hospitalclient.helper;
 
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.*;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Hashtable;
@@ -15,18 +13,16 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.nikzzzn.hospitalclient.holder.AppointmentHolder;
 import com.nikzzzn.hospitalclient.model.Appointment;
 import com.nikzzzn.hospitalclient.model.Doctor;
 import com.nikzzzn.hospitalclient.model.Patient;
 import com.nikzzzn.hospitalclient.model.Specialty;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.HttpClients;
 
 public class Connector {
@@ -36,9 +32,9 @@ public class Connector {
             .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
     private static HttpURLConnection connection;
 
-    public static Optional<List<AppointmentHolder>> getAppointments() throws IOException {
+    public static Optional<List<Appointment>> getAppointments() throws IOException {
         List<Appointment> parsed = mapper.readValue(new URL(urlString), new TypeReference<>() {});
-        return Optional.of(Converter.convertToHolder(parsed));
+        return Optional.of(parsed);
     }
 
     public static Optional<List<Specialty>> getSpecialties() throws IOException {
@@ -72,16 +68,31 @@ public class Connector {
         return Optional.of(mapper.readValue(new URL(sb.toString()), typeRef));
     }
 
-    public static void saveAppointment(Integer doctorId, Integer patientId, LocalDate date, LocalTime time) {
+    public static void saveAppointment(Appointment appointment) {
         try {
             CloseableHttpClient httpclient = HttpClients.createDefault();
-            HttpPost httpGet = new HttpPost(urlString + "/save_appointment");
-            URI uri = new URIBuilder(httpGet.getURI())
-                    .addParameter("doctorId", doctorId.toString())
-                    .addParameter("patientId", patientId.toString())
-                    .addParameter("date", date.toString())
-                    .addParameter("time", time.toString())
+            HttpPost httpPost = new HttpPost(urlString + "/save_appointment");
+            URI uri = new URIBuilder(httpPost.getURI())
+                    .addParameter("id", appointment.id.toString())
+                    .addParameter("doctorId", appointment.doctor.id.toString())
+                    .addParameter("patientId", appointment.patient.id.toString())
+                    .addParameter("date", appointment.date.toString())
+                    .addParameter("time", appointment.time.toString())
                     .build();
+            httpPost.setURI(uri);
+            CloseableHttpResponse response = httpclient.execute(httpPost);
+            httpclient.close();
+        }
+        catch (URISyntaxException | IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public static void deleteAppointment(Appointment appointment){
+        try {
+            CloseableHttpClient httpclient = HttpClients.createDefault();
+            HttpGet httpGet = new HttpGet(urlString + "/delete_appointment/" + appointment.id);
+            URI uri = new URIBuilder(httpGet.getURI()).build();
             httpGet.setURI(uri);
             CloseableHttpResponse response = httpclient.execute(httpGet);
             httpclient.close();

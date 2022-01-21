@@ -44,4 +44,5 @@ public class Appointment {
         this.date = date;
         this.time = time;
     }
+
 }

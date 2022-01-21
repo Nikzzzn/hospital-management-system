@@ -7,8 +7,6 @@ import com.nikzzzn.hospitalclient.model.Appointment;
 import com.nikzzzn.hospitalclient.model.Doctor;
 import com.nikzzzn.hospitalclient.model.Patient;
 import com.nikzzzn.hospitalclient.model.Specialty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,15 +19,16 @@ import javafx.util.StringConverter;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.ResourceBundle;
 
-public class AddAppointmentContinueController implements Initializable {
+public class EditAppointmentContinueController implements Initializable {
 
     private Map<Integer, List<LocalTime>> availableDoctors;
-    private Patient patient;
-    private LocalDate date;
+    private Appointment appointment;
 
     @FXML
     private ComboBox<Doctor> comboBoxDoctor;
@@ -37,10 +36,9 @@ public class AddAppointmentContinueController implements Initializable {
     @FXML
     private ComboBox<LocalTime> comboBoxTime;
 
-    public void btnAddClick(ActionEvent event) throws IOException {
-        Doctor doctor = comboBoxDoctor.getValue();
-        LocalTime time = comboBoxTime.getValue();
-        Appointment appointment = new Appointment(0, doctor, patient, date, time);
+    public void btnSaveClick(ActionEvent event) throws IOException {
+        appointment.doctor = comboBoxDoctor.getValue();
+        appointment.time = comboBoxTime.getValue();
         Connector.saveAppointment(appointment);
 
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("main-view.fxml"));
@@ -52,10 +50,9 @@ public class AddAppointmentContinueController implements Initializable {
         stage.show();
     }
 
-    public void initializeElements(Patient patient, Specialty specialty, LocalDate date) throws IOException {
-        availableDoctors = Connector.getAvailableDoctors(date, specialty.id).orElse(new HashMap<>());
-        this.patient = patient;
-        this.date = date;
+    public void initializeElements(Appointment appointment, Specialty specialty) throws IOException {
+        availableDoctors = Connector.getAvailableDoctors(appointment.date, specialty.id).orElse(new HashMap<>());
+        this.appointment = appointment;
     }
 
     @Override
@@ -89,6 +86,13 @@ public class AddAppointmentContinueController implements Initializable {
         }
         catch(IOException e){
             e.printStackTrace();
+        }
+
+        if(availableDoctors.containsKey(appointment.doctor.id)){
+            comboBoxDoctor.setValue(appointment.doctor);
+            if(availableDoctors.get(appointment.doctor.id).contains(appointment.time)) {
+                comboBoxTime.setValue(appointment.time);
+            }
         }
     }
 }
