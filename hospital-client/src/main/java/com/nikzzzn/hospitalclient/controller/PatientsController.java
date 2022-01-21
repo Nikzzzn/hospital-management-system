@@ -11,9 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
 
@@ -33,17 +31,32 @@ public class PatientsController extends MenuController implements Initializable 
     @FXML private TableColumn<Patient, String> columnGender;
     @FXML private TableColumn<Patient, String> columnPhone;
     @FXML private TableColumn<Patient, String> columnAddress;
+    @FXML private TextField textFieldSearch;
+    @FXML private Button btnClear;
 
-    public void btnNewPatientClick(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("add-patient-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        stage.setTitle("Hospital");
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.show();
+    public void btnSearchClick(ActionEvent event) {
+        String name = textFieldSearch.getText();
+        if(name.length() > 0){
+            try {
+                List<Patient> list = Connector.getPatientsByName(name).orElse(new ArrayList<>());
+                patientsTable.getItems().setAll(list);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        btnClear.setDisable(false);
     }
 
+    public void btnClearClick(ActionEvent event) {
+        textFieldSearch.setText("");
+        try {
+            List<Patient> list = Connector.getPatients().orElse(new ArrayList<>());
+            patientsTable.getItems().setAll(list);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        btnClear.setDisable(true);
+    }
     public void onPatientClick(Stage stage, Patient patient){
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("edit-patient-view.fxml"));
         EditPatientController continueController = new EditPatientController();

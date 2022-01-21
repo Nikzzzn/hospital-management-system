@@ -16,7 +16,12 @@
             <menus>
                 <Menu mnemonicParsing="false" text="Data">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#menuAppointmentsClicked" text="Appointments" />
+                        <Menu mnemonicParsing="false" text="Appointments">
+                            <items>
+                                <MenuItem mnemonicParsing="false" onAction="#menuWeekClicked" text="For this week" />
+                                <MenuItem mnemonicParsing="false" onAction="#menuAppointmentsClicked" text="For all time" />
+                            </items>
+                        </Menu>
                         <MenuItem mnemonicParsing="false" onAction="#menuDoctorsClicked" text="Doctors" />
                         <MenuItem mnemonicParsing="false" onAction="#menuPatientsClicked" text="Patients" />
                     </items>

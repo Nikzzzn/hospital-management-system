@@ -35,20 +35,15 @@ public class AppointmentController {
     @Autowired
     private SpecialtyService specialtyService;
 
-    @GetMapping("/")
+    @GetMapping("/appointments")
     public List<Appointment> getAppointments(){
         return appointmentService.findAll();
     }
 
-    /*@GetMapping("/new_appointment")
-    public String showNewAppointmentPage(Model model){
-        Appointment appointment = new Appointment();
-        model.addAttribute("appointment", appointment);
-        model.addAttribute("listOfPatients", patientService.findAll());
-        model.addAttribute("listOfSpecialties", specialtyService.findAll());
-
-        return "new_appointment";
-    }*/
+    @GetMapping("/weeks_schedule")
+    public List<Appointment> getWeekSchedule(){
+        return appointmentService.findForCurrentWeek();
+    }
 
     @PostMapping("/save_appointment")
     public void saveAppointment(@RequestParam Integer id,

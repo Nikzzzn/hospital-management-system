@@ -57,15 +57,8 @@ public class PatientController {
     }
 
     @PostMapping("/patient_search")
-    public String patientSearch(Model model, @RequestParam String patientName) {
-        List<Patient> foundPatients = patientService.findByName(patientName);
-        model.addAttribute("foundPatients", foundPatients);
-        StringBuilder sb = new StringBuilder("Found results for query \"");
-        sb.append(patientName)
-          .append("\"");
-        model.addAttribute("query", sb.toString());
-
-        return "patient_search";
+    public List<Patient> patientSearch(@RequestParam String name) {
+        return patientService.findByName(name);
     }
 
 }

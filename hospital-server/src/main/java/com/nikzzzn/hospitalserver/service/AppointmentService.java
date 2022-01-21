@@ -34,4 +34,7 @@ public class AppointmentService {
         return appointmentRepository.findAllByDoctor_IdAndAppointmentDate(id, date);
     }
 
+    public List<Appointment> findForCurrentWeek() {
+        return appointmentRepository.findForCurrentWeek();
+    }
 }

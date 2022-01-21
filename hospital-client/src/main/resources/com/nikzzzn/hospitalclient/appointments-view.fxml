@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.Button?>
 
-<VBox alignment="CENTER" prefHeight="410.0" prefWidth="640.0" spacing="20.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nikzzzn.hospitalclient.controller.PatientsController">
+<VBox alignment="CENTER" prefHeight="410.0" prefWidth="640.0" spacing="20.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nikzzzn.hospitalclient.controller.AppointmentsController">
     <children>
         <MenuBar fx:id="menuBar">
             <menus>
@@ -35,33 +35,30 @@
                 </Menu>
             </menus>
         </MenuBar>
-        <Label text="List of patients">
+        <Label text="List of all appointments">
             <font>
                 <Font size="22.0" />
             </font>
         </Label>
-        <TableView fx:id="patientsTable" prefHeight="313.0" prefWidth="600.0">
+        <TableView fx:id="appointmentsTable" prefHeight="313.0" prefWidth="600.0">
             <columns>
                 <TableColumn fx:id="columnId" prefWidth="30.0" text="ID" />
-                <TableColumn fx:id="columnName" prefWidth="130.0" text="Name" />
-                <TableColumn fx:id="columnBirthDay" prefWidth="90.0" text="Date of birth" />
-                <TableColumn fx:id="columnGender" prefWidth="60.0" text="Gender" />
-                <TableColumn fx:id="columnPhone" prefWidth="125.0" text="Phone" />
-                <TableColumn fx:id="columnAddress" prefWidth="162.0" text="Address" />
+                <TableColumn fx:id="columnDoctor" prefWidth="190.0" text="Doctor name" />
+                <TableColumn fx:id="columnPatient" prefWidth="190.0" text="Patient name" />
+                <TableColumn fx:id="columnDate" prefWidth="120.0" text="Date" />
+                <TableColumn fx:id="columnTime" prefWidth="67.0" text="Time" />
             </columns>
             <VBox.margin>
                 <Insets left="20.0" right="20.0" />
             </VBox.margin>
         </TableView>
-        <HBox prefHeight="100.0" prefWidth="200.0">
-            <children>
-                <TextField fx:id="textFieldSearch" prefHeight="25.0" prefWidth="182.0" />
-                <Button mnemonicParsing="false" onAction="#btnSearchClick" text="Search" />
-                <Button fx:id="btnClear" disable="true" layoutX="192.0" layoutY="10.0" mnemonicParsing="false" onAction="#btnClearClick" text="Clear" />
-            </children>
+        <Button mnemonicParsing="false" onAction="#btnWeekAppointmentsClick" text="Show appointments for current week">
             <VBox.margin>
-                <Insets left="20.0" right="20.0" />
+                <Insets bottom="20.0" />
             </VBox.margin>
-        </HBox>
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Button>
     </children>
 </VBox>

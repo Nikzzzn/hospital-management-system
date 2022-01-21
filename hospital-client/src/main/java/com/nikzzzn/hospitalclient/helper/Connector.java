@@ -4,10 +4,7 @@ import java.io.IOException;
 import java.net.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -33,7 +30,12 @@ public class Connector {
     private static HttpURLConnection connection;
 
     public static Optional<List<Appointment>> getAppointments() throws IOException {
-        List<Appointment> parsed = mapper.readValue(new URL(urlString), new TypeReference<>() {});
+        List<Appointment> parsed = mapper.readValue(new URL(urlString + "/appointments"), new TypeReference<>() {});
+        return Optional.of(parsed);
+    }
+
+    public static Optional<List<Appointment>> getAppointmentsForWeek() throws IOException {
+        List<Appointment> parsed = mapper.readValue(new URL(urlString + "/weeks_schedule"), new TypeReference<>() {});
         return Optional.of(parsed);
     }
 
@@ -134,6 +136,25 @@ public class Connector {
         }
     }
 
+    public static Optional<List<Doctor>> getDoctorsByName(String name) throws IOException {
+        Optional<List<Doctor>> result = Optional.empty();
+        try {
+            CloseableHttpClient httpclient = HttpClients.createDefault();
+            HttpPost httpPost = new HttpPost(urlString + "/doctor_search");
+            URI uri = new URIBuilder(httpPost.getURI())
+                    .addParameter("name", name)
+                    .build();
+            httpPost.setURI(uri);
+            CloseableHttpResponse response = httpclient.execute(httpPost);
+            result = Optional.of(mapper.readValue(response.getEntity().getContent(), new TypeReference<>() {}));
+            httpclient.close();
+        }
+        catch (URISyntaxException | IOException e){
+            e.printStackTrace();
+        }
+        return result;
+    }
+
     public static void savePatient(Patient patient) {
         try {
             CloseableHttpClient httpclient = HttpClients.createDefault();
@@ -169,4 +190,22 @@ public class Connector {
         }
     }
 
+    public static Optional<List<Patient>> getPatientsByName(String name) throws IOException {
+        Optional<List<Patient>> result = Optional.empty();
+        try {
+            CloseableHttpClient httpclient = HttpClients.createDefault();
+            HttpPost httpPost = new HttpPost(urlString + "/patient_search");
+            URI uri = new URIBuilder(httpPost.getURI())
+                    .addParameter("name", name)
+                    .build();
+            httpPost.setURI(uri);
+            CloseableHttpResponse response = httpclient.execute(httpPost);
+            result = Optional.of(mapper.readValue(response.getEntity().getContent(), new TypeReference<>() {}));
+            httpclient.close();
+        }
+        catch (URISyntaxException | IOException e){
+            e.printStackTrace();
+        }
+        return result;
+    }
 }

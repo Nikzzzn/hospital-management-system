@@ -11,9 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
 
@@ -25,23 +23,35 @@ import java.util.ResourceBundle;
 
 public class DoctorsController extends MenuController implements Initializable {
 
-    @FXML
-    private TableView<Doctor> doctorsTable;
-    @FXML
-    private TableColumn<Doctor, Integer> columnId;
-    @FXML
-    private TableColumn<Doctor, String> columnName;
-    @FXML
-    private TableColumn<Doctor, String> columnSpecialty;
+    @FXML private TableView<Doctor> doctorsTable;
+    @FXML private TableColumn<Doctor, Integer> columnId;
+    @FXML private TableColumn<Doctor, String> columnName;
+    @FXML private TableColumn<Doctor, String> columnSpecialty;
+    @FXML private TextField textFieldSearch;
+    @FXML private Button btnClear;
 
-    public void btnNewDoctorClick(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("add-doctor-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        stage.setTitle("Hospital");
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.show();
+    public void btnSearchClick(ActionEvent event) {
+        String name = textFieldSearch.getText();
+        if(name.length() > 0){
+            try {
+                List<Doctor> list = Connector.getDoctorsByName(name).orElse(new ArrayList<>());
+                doctorsTable.getItems().setAll(list);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        btnClear.setDisable(false);
+    }
+
+    public void btnClearClick(ActionEvent event) {
+        textFieldSearch.setText("");
+        try {
+            List<Doctor> list = Connector.getDoctors().orElse(new ArrayList<>());
+            doctorsTable.getItems().setAll(list);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        btnClear.setDisable(true);
     }
 
     public void onDoctorClick(Stage stage, Doctor doctor){

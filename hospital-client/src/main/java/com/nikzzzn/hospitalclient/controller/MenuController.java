@@ -29,6 +29,10 @@ public class MenuController {
     }
 
     public void menuAppointmentsClicked(ActionEvent event) throws IOException {
+        loadScene("appointments-view.fxml");
+    }
+
+    public void menuWeekClicked(ActionEvent event) throws IOException {
         loadScene("main-view.fxml");
     }
 
