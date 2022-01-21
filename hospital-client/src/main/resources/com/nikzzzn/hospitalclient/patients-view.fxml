@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+
+<VBox alignment="CENTER" prefHeight="410.0" prefWidth="640.0" spacing="20.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nikzzzn.hospitalclient.controller.PatientsController">
+    <children>
+        <MenuBar fx:id="menuBar">
+            <menus>
+                <Menu mnemonicParsing="false" text="Data">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#menuAppointmentsClicked" text="Appointments" />
+                        <MenuItem mnemonicParsing="false" onAction="#menuDoctorsClicked" text="Doctors" />
+                        <MenuItem mnemonicParsing="false" onAction="#menuPatientsClicked" text="Patients" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Add">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#menuAddAppointmentClicked" text="New appointment" />
+                        <MenuItem mnemonicParsing="false" onAction="#menuAddDoctorClicked" text="New doctor" />
+                        <MenuItem mnemonicParsing="false" onAction="#menuAddPatientClicked" text="New patient" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+        <Label text="List of patients">
+            <font>
+                <Font size="22.0" />
+            </font>
+        </Label>
+        <TableView fx:id="patientsTable" prefHeight="313.0" prefWidth="600.0">
+            <columns>
+                <TableColumn fx:id="columnId" prefWidth="30.0" text="ID" />
+                <TableColumn fx:id="columnName" prefWidth="130.0" text="Name" />
+                <TableColumn fx:id="columnBirthDay" prefWidth="90.0" text="Date of birth" />
+                <TableColumn fx:id="columnGender" prefWidth="60.0" text="Gender" />
+                <TableColumn fx:id="columnPhone" prefWidth="125.0" text="Phone" />
+                <TableColumn fx:id="columnAddress" prefWidth="162.0" text="Address" />
+            </columns>
+            <VBox.margin>
+                <Insets left="20.0" right="20.0" />
+            </VBox.margin>
+        </TableView>
+        <Button mnemonicParsing="false" onAction="#btnNewPatientClick" text="Add new patient">
+            <VBox.margin>
+                <Insets bottom="20.0" />
+            </VBox.margin></Button>
+    </children>
+</VBox>

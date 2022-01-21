@@ -133,4 +133,40 @@ public class Connector {
             e.printStackTrace();
         }
     }
+
+    public static void savePatient(Patient patient) {
+        try {
+            CloseableHttpClient httpclient = HttpClients.createDefault();
+            HttpPost httpPost = new HttpPost(urlString + "/save_patient");
+            URI uri = new URIBuilder(httpPost.getURI())
+                    .addParameter("id", patient.id.toString())
+                    .addParameter("name", patient.name)
+                    .addParameter("dateOfBirth", patient.dateOfBirth.toString())
+                    .addParameter("gender", patient.gender)
+                    .addParameter("phone", patient.phone)
+                    .addParameter("address", patient.address)
+                    .build();
+            httpPost.setURI(uri);
+            CloseableHttpResponse response = httpclient.execute(httpPost);
+            httpclient.close();
+        }
+        catch (URISyntaxException | IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public static void deletePatient(Patient patient) {
+        try {
+            CloseableHttpClient httpclient = HttpClients.createDefault();
+            HttpGet httpGet = new HttpGet(urlString + "/delete_patient/" + patient.id);
+            URI uri = new URIBuilder(httpGet.getURI()).build();
+            httpGet.setURI(uri);
+            CloseableHttpResponse response = httpclient.execute(httpGet);
+            httpclient.close();
+        }
+        catch (URISyntaxException | IOException e){
+            e.printStackTrace();
+        }
+    }
+
 }

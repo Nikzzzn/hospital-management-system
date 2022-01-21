@@ -24,8 +24,8 @@ public class MenuController {
         loadScene("add-doctor-view.fxml");
     }
 
-    public void menuAddPatientClicked(ActionEvent event){
-
+    public void menuAddPatientClicked(ActionEvent event) throws IOException {
+        loadScene("add-patient-view.fxml");
     }
 
     public void menuAppointmentsClicked(ActionEvent event) throws IOException {
@@ -36,8 +36,8 @@ public class MenuController {
         loadScene("doctors-view.fxml");
     }
 
-    public void menuPatientsClicked(ActionEvent event){
-
+    public void menuPatientsClicked(ActionEvent event) throws IOException {
+        loadScene("patients-view.fxml");
     }
 
     private void loadScene(String name) throws IOException {

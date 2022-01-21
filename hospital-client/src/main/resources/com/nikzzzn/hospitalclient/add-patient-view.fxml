@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="410.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nikzzzn.hospitalclient.controller.AddPatientController">
+    <children>
+        <MenuBar fx:id="menuBar" prefHeight="25.0" prefWidth="640.0">
+            <menus>
+                <Menu mnemonicParsing="false" text="Data">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#menuAppointmentsClicked" text="Appointments" />
+                        <MenuItem mnemonicParsing="false" onAction="#menuDoctorsClicked" text="Doctors" />
+                        <MenuItem mnemonicParsing="false" onAction="#menuPatientsClicked" text="Patients" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Add">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#menuAddAppointmentClicked" text="New appointment" />
+                        <MenuItem mnemonicParsing="false" onAction="#menuAddDoctorClicked" text="New doctor" />
+                        <MenuItem mnemonicParsing="false" onAction="#menuAddPatientClicked" text="New patient" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+        <VBox layoutX="112.0" layoutY="108.0" prefHeight="190.0" prefWidth="420.0">
+            <children>
+                <HBox prefHeight="15.0" prefWidth="437.0">
+                    <children>
+                        <Label prefHeight="27.0" prefWidth="250.0" text="Patient name:">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="textFieldName" prefHeight="25.0" prefWidth="170.0" />
+                    </children>
+                    <VBox.margin>
+                        <Insets />
+                    </VBox.margin>
+                </HBox>
+                <HBox prefHeight="7.0" prefWidth="437.0">
+                    <children>
+                        <Label prefHeight="27.0" prefWidth="250.0" text="Date of birth:">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                  <DatePicker fx:id="datePicker" prefHeight="25.0" prefWidth="170.0" />
+                    </children>
+                    <VBox.margin>
+                        <Insets />
+                    </VBox.margin>
+               <padding>
+                  <Insets top="15.0" />
+               </padding>
+                </HBox>
+            <HBox prefHeight="27.0" prefWidth="200.0">
+               <children>
+                  <Label prefHeight="27.0" prefWidth="250.0" text="Gender:">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="comboBoxGender" prefHeight="25.0" prefWidth="170.0" />
+               </children>
+               <padding>
+                  <Insets top="15.0" />
+               </padding>
+            </HBox>
+            <HBox prefHeight="27.0" prefWidth="200.0">
+               <children>
+                  <Label prefHeight="27.0" prefWidth="250.0" text="Phone:">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="textFieldPhone" prefWidth="170.0" />
+               </children>
+               <padding>
+                  <Insets top="15.0" />
+               </padding>
+            </HBox>
+            <HBox prefHeight="27.0" prefWidth="200.0">
+               <children>
+                  <Label prefHeight="27.0" prefWidth="250.0" text="Address:">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="textFieldAddress" prefWidth="170.0" />
+               </children>
+               <padding>
+                  <Insets top="15.0" />
+               </padding>
+            </HBox>
+            </children>
+        </VBox>
+        <Label layoutX="240.0" layoutY="55.0" text="Add new patient" AnchorPane.topAnchor="55.0">
+            <font>
+                <Font size="22.0" />
+            </font>
+        </Label>
+        <Button layoutX="299.0" layoutY="330.0" mnemonicParsing="false" onAction="#btnAddClick" text="Add" AnchorPane.bottomAnchor="50.0">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Button>
+    </children>
+</AnchorPane>

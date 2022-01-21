@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
 
 @RestController
@@ -30,10 +32,14 @@ public class PatientController {
     }
 
     @PostMapping(value = "/save_patient")
-    public String savePatient(@ModelAttribute("patient") Patient patient) {
+    public void savePatient(@RequestParam Integer id,
+                            @RequestParam String name,
+                            @RequestParam LocalDate dateOfBirth,
+                            @RequestParam String gender,
+                            @RequestParam String phone,
+                            @RequestParam String address) {
+        Patient patient = new Patient(id, name, dateOfBirth, gender, phone, address, new HashSet<>());
         patientService.savePatient(patient);
-
-        return "redirect:/patients";
     }
 
     @GetMapping("/edit_patient/{id}")
@@ -46,9 +52,8 @@ public class PatientController {
     }
 
     @GetMapping("/delete_patient/{id}")
-    public String deletePatient(@PathVariable(name = "id") int id) {
+    public void deletePatient(@PathVariable(name = "id") int id) {
         patientService.deletePatient(id);
-        return "redirect:/patients";
     }
 
     @PostMapping("/patient_search")

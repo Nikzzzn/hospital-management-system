@@ -2,8 +2,8 @@ package com.nikzzzn.hospitalclient.controller;
 
 import com.nikzzzn.hospitalclient.MainApplication;
 import com.nikzzzn.hospitalclient.helper.Connector;
-import com.nikzzzn.hospitalclient.model.Appointment;
 import com.nikzzzn.hospitalclient.model.Doctor;
+import com.nikzzzn.hospitalclient.model.Patient;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,23 +19,23 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class DoctorsController extends MenuController implements Initializable {
+public class PatientsController extends MenuController implements Initializable {
 
-    @FXML
-    private TableView<Doctor> doctorsTable;
-    @FXML
-    private TableColumn<Doctor, Integer> columnId;
-    @FXML
-    private TableColumn<Doctor, String> columnName;
-    @FXML
-    private TableColumn<Doctor, String> columnSpecialty;
+    @FXML private TableView<Patient> patientsTable;
+    @FXML private TableColumn<Patient, Integer> columnId;
+    @FXML private TableColumn<Patient, String> columnName;
+    @FXML private TableColumn<Patient, LocalDate> columnBirthDay;
+    @FXML private TableColumn<Patient, String> columnGender;
+    @FXML private TableColumn<Patient, String> columnPhone;
+    @FXML private TableColumn<Patient, String> columnAddress;
 
-    public void btnNewDoctorClick(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("add-doctor-view.fxml"));
+    public void btnNewPatientClick(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("add-patient-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         stage.setTitle("Hospital");
@@ -44,10 +44,10 @@ public class DoctorsController extends MenuController implements Initializable {
         stage.show();
     }
 
-    public void onDoctorClick(Stage stage, Doctor doctor){
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("edit-doctor-view.fxml"));
-        EditDoctorController continueController = new EditDoctorController();
-        continueController.setDoctor(doctor);
+    public void onPatientClick(Stage stage, Patient patient){
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("edit-patient-view.fxml"));
+        EditPatientController continueController = new EditPatientController();
+        continueController.setPatient(patient);
         fxmlLoader.setController(continueController);
         try {
             Scene scene = new Scene(fxmlLoader.load());
@@ -65,24 +65,27 @@ public class DoctorsController extends MenuController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         columnId.setCellValueFactory(p -> new ReadOnlyObjectWrapper<>(p.getValue().id));
         columnName.setCellValueFactory(p -> new ReadOnlyObjectWrapper<>(p.getValue().name));
-        columnSpecialty.setCellValueFactory(p -> new ReadOnlyObjectWrapper<>(p.getValue().specialty.name));
+        columnBirthDay.setCellValueFactory(p -> new ReadOnlyObjectWrapper<>(p.getValue().dateOfBirth));
+        columnGender.setCellValueFactory(p -> new ReadOnlyObjectWrapper<>(p.getValue().gender));
+        columnPhone.setCellValueFactory(p -> new ReadOnlyObjectWrapper<>(p.getValue().phone));
+        columnAddress.setCellValueFactory(p -> new ReadOnlyObjectWrapper<>(p.getValue().address));
 
-        doctorsTable.setRowFactory(tv -> {
-            TableRow<Doctor> row = new TableRow<>();
+        patientsTable.setRowFactory(tv -> {
+            TableRow<Patient> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
                 if (! row.isEmpty() && event.getButton()== MouseButton.PRIMARY
                         && event.getClickCount() == 1) {
-                    Doctor clickedRow = row.getItem();
-                    onDoctorClick(stage, clickedRow);
+                    Patient clickedRow = row.getItem();
+                    onPatientClick(stage, clickedRow);
                 }
             });
             return row ;
         });
 
         try {
-            List<Doctor> list = Connector.getDoctors().orElse(new ArrayList<>());
-            doctorsTable.getItems().setAll(list);
+            List<Patient> list = Connector.getPatients().orElse(new ArrayList<>());
+            patientsTable.getItems().setAll(list);
         } catch (IOException e) {
             e.printStackTrace();
         }
