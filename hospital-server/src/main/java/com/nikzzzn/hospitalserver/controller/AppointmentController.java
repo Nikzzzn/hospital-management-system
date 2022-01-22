@@ -46,26 +46,15 @@ public class AppointmentController {
     }
 
     @PostMapping("/save_appointment")
-    public void saveAppointment(@RequestParam Integer id,
-                                @RequestParam Integer doctorId,
-                                @RequestParam Integer patientId,
-                                @RequestParam LocalDate date,
-                                @RequestParam LocalTime time) {
+    public Appointment saveAppointment(@RequestParam Integer id,
+                                       @RequestParam Integer doctorId,
+                                       @RequestParam Integer patientId,
+                                       @RequestParam LocalDate date,
+                                       @RequestParam LocalTime time) {
         Doctor doctor = doctorService.findById(doctorId);
         Patient patient = patientService.findById(patientId);
         Appointment appointment = new Appointment(id, doctor, patient, date, time);
-        appointmentService.saveAppointment(appointment);
-    }
-
-    @GetMapping("/edit_appointment/{id}")
-    public ModelAndView showEditAppointmentPage(@PathVariable(name = "id") int id) {
-        ModelAndView mav = new ModelAndView("edit_appointment");
-        Appointment appointment = appointmentService.findById(id);
-        mav.addObject("appointment", appointment);
-        mav.addObject("listOfDoctors", doctorService.findAll());
-        mav.addObject("listOfPatients", patientService.findAll());
-
-        return mav;
+        return appointmentService.saveAppointment(appointment);
     }
 
     @GetMapping("/delete_appointment/{id}")
@@ -73,4 +62,23 @@ public class AppointmentController {
         appointmentService.deleteAppointment(id);
     }
 
+    @GetMapping("/appointments_week_patient/{id}")
+    public List<Appointment> getForCurrentWeekByPatientId(@PathVariable(name = "id") int id) {
+        return appointmentService.findForCurrentWeekByPatientId(id);
+    }
+
+    @GetMapping("/appointments_patient/{id}")
+    public List<Appointment> getAllByPatientId(@PathVariable(name = "id") int id) {
+        return appointmentService.findAllByPatientId(id);
+    }
+
+    @GetMapping("/appointments_week_doctor/{id}")
+    public List<Appointment> getForCurrentWeekByDoctorId(@PathVariable(name = "id") int id) {
+        return appointmentService.findForCurrentWeekByDoctorId(id);
+    }
+
+    @GetMapping("/appointments_doctor/{id}")
+    public List<Appointment> getAllByDoctorId(@PathVariable(name = "id") int id) {
+        return appointmentService.findAllByDoctorId(id);
+    }
 }

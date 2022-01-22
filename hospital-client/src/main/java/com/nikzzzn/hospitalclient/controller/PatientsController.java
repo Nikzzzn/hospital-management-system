@@ -2,7 +2,6 @@ package com.nikzzzn.hospitalclient.controller;
 
 import com.nikzzzn.hospitalclient.MainApplication;
 import com.nikzzzn.hospitalclient.helper.Connector;
-import com.nikzzzn.hospitalclient.model.Doctor;
 import com.nikzzzn.hospitalclient.model.Patient;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.event.ActionEvent;
@@ -57,10 +56,11 @@ public class PatientsController extends MenuController implements Initializable 
         }
         btnClear.setDisable(true);
     }
+
     public void onPatientClick(Stage stage, Patient patient){
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("edit-patient-view.fxml"));
-        EditPatientController continueController = new EditPatientController();
-        continueController.setPatient(patient);
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("patient-info-view.fxml"));
+        PatientInfoController continueController = new PatientInfoController();
+        continueController.setParameters(stage, patient);
         fxmlLoader.setController(continueController);
         try {
             Scene scene = new Scene(fxmlLoader.load());

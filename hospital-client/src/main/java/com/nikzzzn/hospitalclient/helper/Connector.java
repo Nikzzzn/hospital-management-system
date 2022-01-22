@@ -208,4 +208,46 @@ public class Connector {
         }
         return result;
     }
+
+    public static Optional<List<Appointment>> getAppointmentsForWeekByPatient(Patient patient) throws IOException {
+        List<Appointment> parsed = mapper.readValue(
+                new URL(urlString + "/appointments_week_patient/" + patient.id),
+                new TypeReference<>() {});
+        return Optional.of(parsed);
+    }
+
+    public static Optional<List<Appointment>> getAppointmentsByPatient(Patient patient) throws IOException {
+        List<Appointment> parsed = mapper.readValue(
+                new URL(urlString + "/appointments_patient/" + patient.id),
+                new TypeReference<>() {});
+        return Optional.of(parsed);
+    }
+
+    public static Optional<List<Appointment>> getAppointmentsForWeekByDoctor(Doctor doctor) throws IOException {
+        List<Appointment> parsed = mapper.readValue(
+                new URL(urlString + "/appointments_week_doctor/" + doctor.id),
+                new TypeReference<>() {});
+        return Optional.of(parsed);
+    }
+
+    public static Optional<List<Appointment>> getAppointmentsByDoctor(Doctor doctor) throws IOException {
+        List<Appointment> parsed = mapper.readValue(
+                new URL(urlString + "/appointments_doctor/" + doctor.id),
+                new TypeReference<>() {});
+        return Optional.of(parsed);
+    }
+
+    public static Optional<List<Doctor>> getDoctorsByPatient(Patient patient) throws IOException {
+        List<Doctor> parsed = mapper.readValue(
+                new URL(urlString + "/patient_doctors/" + patient.id),
+                new TypeReference<>() {});
+        return Optional.of(parsed);
+    }
+
+    public static Optional<List<Patient>> getPatientsByDoctor(Doctor doctor) throws IOException {
+        List<Patient> parsed = mapper.readValue(
+                new URL(urlString + "/doctor_patients/" + doctor.id),
+                new TypeReference<>() {});
+        return Optional.of(parsed);
+    }
 }

@@ -13,8 +13,8 @@ public class DoctorService {
     @Autowired
     private DoctorRepository doctorRepository;
 
-    public void saveDoctor(Doctor doctor){
-        doctorRepository.save(doctor);
+    public Doctor saveDoctor(Doctor doctor){
+        return doctorRepository.save(doctor);
     }
 
     public void deleteDoctor(Integer id){
@@ -38,7 +38,7 @@ public class DoctorService {
     }
 
     public List<Doctor> findByPatientId(Integer id){
-        return doctorRepository.findAllByAppointmentsPatient_Id(id);
+        return doctorRepository.findAllByPatientId(id);
     }
 
 }

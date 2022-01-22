@@ -51,17 +51,6 @@ public class EditDoctorController extends MenuController implements Initializabl
         stage.show();
     }
 
-    public void btnDeleteClick(ActionEvent event) throws IOException {
-        Connector.deleteDoctor(doctor);
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("doctors-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        stage.setTitle("Hospital");
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.show();
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         FxUtil.autoCompleteComboBoxPlus(comboBoxSpecialty, (typedText, itemToCompare) -> itemToCompare.name.toLowerCase().contains(typedText.toLowerCase()));

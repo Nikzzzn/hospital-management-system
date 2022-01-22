@@ -55,9 +55,9 @@ public class DoctorsController extends MenuController implements Initializable {
     }
 
     public void onDoctorClick(Stage stage, Doctor doctor){
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("edit-doctor-view.fxml"));
-        EditDoctorController continueController = new EditDoctorController();
-        continueController.setDoctor(doctor);
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("doctor-info-view.fxml"));
+        DoctorInfoController continueController = new DoctorInfoController();
+        continueController.setParameters(stage, doctor);
         fxmlLoader.setController(continueController);
         try {
             Scene scene = new Scene(fxmlLoader.load());

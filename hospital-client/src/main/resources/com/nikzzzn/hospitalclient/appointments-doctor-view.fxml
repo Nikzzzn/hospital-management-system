@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+
+<VBox alignment="CENTER" prefHeight="410.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <MenuBar fx:id="menuBar">
+            <menus>
+                <Menu mnemonicParsing="false" text="Data">
+                    <items>
+                        <Menu mnemonicParsing="false" text="Appointments">
+                            <items>
+                                <MenuItem mnemonicParsing="false" onAction="#menuWeekClicked" text="For this week" />
+                                <MenuItem mnemonicParsing="false" onAction="#menuAppointmentsClicked" text="For all time" />
+                            </items>
+                        </Menu>
+                        <MenuItem mnemonicParsing="false" onAction="#menuDoctorsClicked" text="Doctors" />
+                        <MenuItem mnemonicParsing="false" onAction="#menuPatientsClicked" text="Patients" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Add">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#menuAddAppointmentClicked" text="New appointment" />
+                        <MenuItem mnemonicParsing="false" onAction="#menuAddDoctorClicked" text="New doctor" />
+                        <MenuItem mnemonicParsing="false" onAction="#menuAddPatientClicked" text="New patient" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+      <HBox prefHeight="30.0" prefWidth="200.0">
+         <children>
+            <Button onAction="#btnBackClick" mnemonicParsing="false" text="Back">
+               <HBox.margin>
+                  <Insets left="5.0" top="5.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+        <Label fx:id="lblTitle" text="List of appointments for doctor">
+            <font>
+                <Font size="22.0" />
+            </font>
+         <VBox.margin>
+            <Insets bottom="20.0" />
+         </VBox.margin>
+        </Label>
+        <TableView fx:id="appointmentsTable" prefHeight="313.0" prefWidth="600.0">
+            <columns>
+                <TableColumn fx:id="columnId" prefWidth="30.0" text="ID" />
+                <TableColumn fx:id="columnDoctor" prefWidth="190.0" text="Doctor name" />
+                <TableColumn fx:id="columnPatient" prefWidth="190.0" text="Patient name" />
+                <TableColumn fx:id="columnDate" prefWidth="120.0" text="Date" />
+                <TableColumn fx:id="columnTime" prefWidth="67.0" text="Time" />
+            </columns>
+            <VBox.margin>
+                <Insets bottom="20.0" left="20.0" right="20.0" />
+            </VBox.margin>
+        </TableView>
+    </children>
+</VBox>

@@ -1,13 +1,17 @@
 package com.nikzzzn.hospitalserver.controller;
 
+import com.nikzzzn.hospitalserver.model.Doctor;
 import com.nikzzzn.hospitalserver.model.Patient;
 import com.nikzzzn.hospitalserver.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
@@ -23,32 +27,21 @@ public class PatientController {
         return patientService.findAll();
     }
 
-    @GetMapping("/new_patient")
-    public String showNewPatientPage(Model model){
-        Patient patient = new Patient();
-        model.addAttribute("patient", patient);
-
-        return "new_patient";
-    }
-
     @PostMapping(value = "/save_patient")
-    public void savePatient(@RequestParam Integer id,
-                            @RequestParam String name,
-                            @RequestParam LocalDate dateOfBirth,
-                            @RequestParam String gender,
-                            @RequestParam String phone,
-                            @RequestParam String address) {
-        Patient patient = new Patient(id, name, dateOfBirth, gender, phone, address, new HashSet<>());
-        patientService.savePatient(patient);
-    }
-
-    @GetMapping("/edit_patient/{id}")
-    public ModelAndView showEditPatientPage(@PathVariable(name = "id") int id) {
-        ModelAndView mav = new ModelAndView("edit_patient");
+    public Patient savePatient(@RequestParam Integer id,
+                               @RequestParam String name,
+                               @RequestParam LocalDate dateOfBirth,
+                               @RequestParam String gender,
+                               @RequestParam String phone,
+                               @RequestParam String address) {
         Patient patient = patientService.findById(id);
-        mav.addObject("patient", patient);
-
-        return mav;
+        patient = (patient != null) ? patient : new Patient();
+        patient.setPatientName(name);
+        patient.setDateOfBirth(dateOfBirth);
+        patient.setGender(gender);
+        patient.setPhone(phone);
+        patient.setAddress(address);
+        return patientService.savePatient(patient);
     }
 
     @GetMapping("/delete_patient/{id}")
@@ -59,6 +52,11 @@ public class PatientController {
     @PostMapping("/patient_search")
     public List<Patient> patientSearch(@RequestParam String name) {
         return patientService.findByName(name);
+    }
+
+    @GetMapping("/doctor_patients/{id}")
+    public List<Patient> getPatientsByDoctorId(@PathVariable(name = "id") int id){
+        return patientService.findByDoctorId(id);
     }
 
 }

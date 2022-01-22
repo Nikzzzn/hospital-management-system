@@ -14,8 +14,8 @@ public class AppointmentService {
     @Autowired
     private AppointmentRepository appointmentRepository;
 
-    public void saveAppointment(Appointment appointment){
-        appointmentRepository.save(appointment);
+    public Appointment saveAppointment(Appointment appointment){
+        return appointmentRepository.save(appointment);
     }
 
     public void deleteAppointment(Integer id){
@@ -37,4 +37,21 @@ public class AppointmentService {
     public List<Appointment> findForCurrentWeek() {
         return appointmentRepository.findForCurrentWeek();
     }
+
+    public List<Appointment> findForCurrentWeekByPatientId(Integer id){
+        return appointmentRepository.findForCurrentWeekByPatientId(id);
+    }
+
+    public List<Appointment> findAllByPatientId(Integer id){
+        return appointmentRepository.findAllByPatientId(id);
+    }
+
+    public List<Appointment> findForCurrentWeekByDoctorId(Integer id){
+        return appointmentRepository.findForCurrentWeekByDoctorId(id);
+    }
+
+    public List<Appointment> findAllByDoctorId(Integer id){
+        return appointmentRepository.findAllByDoctorId(id);
+    }
+
 }

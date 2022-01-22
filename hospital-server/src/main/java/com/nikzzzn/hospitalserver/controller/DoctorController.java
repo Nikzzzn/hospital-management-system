@@ -46,7 +46,7 @@ public class DoctorController {
 
     @GetMapping("/available_doctors")
     public Map<Integer, List<LocalTime>> getDoctorsWith(@RequestParam LocalDate date,
-                                                     @RequestParam Integer specialty){
+                                                        @RequestParam Integer specialty){
         List<Doctor> listOfDoctors = doctorService.findBySpecialtyId(specialty);
         Map<Integer, List<LocalTime>> doctorsAndHours = new Hashtable<>();
         Stream<LocalTime> beforeLunchTime = Stream.iterate(LocalTime.of(9, 0),
@@ -68,32 +68,16 @@ public class DoctorController {
         return doctorsAndHours;
     }
 
-    @GetMapping("/new_doctor")
-    public String showNewDoctorPage(Model model){
-        Doctor doctor = new Doctor();
-        model.addAttribute("doctor", doctor);
-        model.addAttribute("listOfSpecialties", specialtyService.findAll());
-
-        return "new_doctor";
-    }
-
     @PostMapping("/save_doctor")
-    public void saveDoctor(@RequestParam Integer id,
+    public Doctor saveDoctor(@RequestParam Integer id,
                            @RequestParam String name,
                            @RequestParam Integer specialtyId) {
-        Specialty specialty = specialtyService.findById(specialtyId);
-        Doctor doctor = new Doctor(id, name, specialty, new HashSet<>());
-        doctorService.saveDoctor(doctor);
-    }
-
-    @GetMapping("/edit_doctor/{id}")
-    public ModelAndView showEditDoctorPage(@PathVariable(name = "id") int id) {
-        ModelAndView mav = new ModelAndView("edit_doctor");
         Doctor doctor = doctorService.findById(id);
-        mav.addObject("doctor", doctor);
-        mav.addObject("listOfSpecialties", specialtyService.findAll());
-
-        return mav;
+        doctor = (doctor != null) ? doctor : new Doctor();
+        doctor.setDoctorName(name);
+        Specialty specialty = specialtyService.findById(specialtyId);
+        doctor.setSpecialty(specialty);
+        return doctorService.saveDoctor(doctor);
     }
 
     @GetMapping("/delete_doctor/{id}")
@@ -104,6 +88,11 @@ public class DoctorController {
     @PostMapping("/doctor_search")
     public List<Doctor> doctorSearch(@RequestParam String name) {
         return doctorService.findByName(name);
+    }
+
+    @GetMapping("/patient_doctors/{id}")
+    public List<Doctor> getDoctorsByPatientId(@PathVariable(name = "id") int id){
+        return doctorService.findByPatientId(id);
     }
 
 }

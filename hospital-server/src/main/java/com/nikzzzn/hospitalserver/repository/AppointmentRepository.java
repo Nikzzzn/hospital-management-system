@@ -19,6 +19,29 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
     List<Appointment> findForCurrentWeek();
 
     @Query(value = "SELECT * FROM appointments a " +
-            "ORDER BY a.appointment_date DESC, a.appointment_time ASC", nativeQuery = true)
+                   "ORDER BY a.appointment_date DESC, a.appointment_time ASC", nativeQuery = true)
     List<Appointment> findAll();
+
+    @Query(value = "SELECT * FROM appointments a " +
+                   "WHERE YEARWEEK(a.appointment_date, 1) = YEARWEEK(CURDATE(), 1) " +
+                   "AND a.patient_id = :id " +
+                   "ORDER BY a.appointment_date DESC, a.appointment_time ASC", nativeQuery = true)
+    List<Appointment> findForCurrentWeekByPatientId(Integer id);
+
+    @Query(value = "SELECT * FROM appointments a " +
+                   "WHERE a.patient_id = :id " +
+                   "ORDER BY a.appointment_date DESC, a.appointment_time ASC", nativeQuery = true)
+    List<Appointment> findAllByPatientId(Integer id);
+
+    @Query(value = "SELECT * FROM appointments a " +
+            "WHERE YEARWEEK(a.appointment_date, 1) = YEARWEEK(CURDATE(), 1) " +
+            "AND a.doctor_id = :id " +
+            "ORDER BY a.appointment_date DESC, a.appointment_time ASC", nativeQuery = true)
+    List<Appointment> findForCurrentWeekByDoctorId(Integer id);
+
+    @Query(value = "SELECT * FROM appointments a " +
+            "WHERE a.doctor_id = :id " +
+            "ORDER BY a.appointment_date DESC, a.appointment_time ASC", nativeQuery = true)
+    List<Appointment> findAllByDoctorId(Integer id);
+
 }
