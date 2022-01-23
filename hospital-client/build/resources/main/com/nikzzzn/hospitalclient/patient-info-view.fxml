@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="410.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <MenuBar fx:id="menuBar" prefHeight="25.0" prefWidth="640.0">
+            <menus>
+                <Menu mnemonicParsing="false" text="Data">
+                    <items>
+                        <Menu mnemonicParsing="false" text="Appointments">
+                            <items>
+                                <MenuItem mnemonicParsing="false" onAction="#menuWeekClicked" text="For this week" />
+                                <MenuItem mnemonicParsing="false" onAction="#menuAppointmentsClicked" text="For all time" />
+                            </items>
+                        </Menu>
+                        <MenuItem mnemonicParsing="false" onAction="#menuDoctorsClicked" text="Doctors" />
+                        <MenuItem mnemonicParsing="false" onAction="#menuPatientsClicked" text="Patients" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Add">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#menuAddAppointmentClicked" text="New appointment" />
+                        <MenuItem mnemonicParsing="false" onAction="#menuAddDoctorClicked" text="New doctor" />
+                        <MenuItem mnemonicParsing="false" onAction="#menuAddPatientClicked" text="New patient" />
+                    </items>
+                </Menu>
+            <Menu mnemonicParsing="false" text="Actions">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#menuEditClick" text="Edit" />
+                  <MenuItem mnemonicParsing="false" onAction="#menuDeleteClick" text="Delete" />
+                  <MenuItem mnemonicParsing="false" onAction="#menuDoctorsInfoClick" text="Doctors info" />
+                  <Menu mnemonicParsing="false" text="Appointments">
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#menuAppointmentsWeekClick" text="For this week" />
+                        <MenuItem mnemonicParsing="false" onAction="#menuAppointmentsAllClick" text="For all time" />
+                    </items>
+                  </Menu>
+              </items>
+            </Menu>
+            </menus>
+        </MenuBar>
+        <VBox layoutX="110.0" layoutY="137.0" prefHeight="195.0" prefWidth="487.0">
+            <children>
+                <HBox prefHeight="15.0" prefWidth="437.0">
+                    <children>
+                        <Label prefHeight="27.0" prefWidth="230.0" text="Patient name:">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                  <Label fx:id="lblName" prefHeight="27.0" prefWidth="257.0" text="Label">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                    </children>
+                    <VBox.margin>
+                        <Insets />
+                    </VBox.margin>
+                </HBox>
+                <HBox prefHeight="7.0" prefWidth="437.0">
+                    <children>
+                        <Label prefHeight="27.0" prefWidth="230.0" text="Date of birth:">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                  <Label fx:id="lblBirthDay" prefHeight="38.0" prefWidth="257.0" text="Label">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                    </children>
+                    <VBox.margin>
+                        <Insets />
+                    </VBox.margin>
+                    <padding>
+                        <Insets top="15.0" />
+                    </padding>
+                </HBox>
+                <HBox prefHeight="27.0" prefWidth="200.0">
+                    <children>
+                        <Label prefHeight="27.0" prefWidth="230.0" text="Gender:">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                  <Label fx:id="lblGender" prefHeight="51.0" prefWidth="257.0" text="Label">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                    </children>
+                    <padding>
+                        <Insets top="15.0" />
+                    </padding>
+                </HBox>
+                <HBox prefHeight="27.0" prefWidth="200.0">
+                    <children>
+                        <Label prefHeight="27.0" prefWidth="230.0" text="Phone:">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                  <Label fx:id="lblPhone" prefHeight="38.0" prefWidth="257.0" text="Label">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                    </children>
+                    <padding>
+                        <Insets top="15.0" />
+                    </padding>
+                </HBox>
+                <HBox prefHeight="27.0" prefWidth="200.0">
+                    <children>
+                        <Label prefHeight="27.0" prefWidth="230.0" text="Address:">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                  <Label fx:id="lblAddress" prefHeight="45.0" prefWidth="257.0" text="Label">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                    </children>
+                    <padding>
+                        <Insets top="15.0" />
+                    </padding>
+                </HBox>
+            </children>
+        </VBox>
+        <Label layoutX="264.0" layoutY="79.0" text="Patient info" AnchorPane.topAnchor="55.0">
+            <font>
+                <Font size="22.0" />
+            </font>
+        </Label>
+    </children>
+</AnchorPane>

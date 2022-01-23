@@ -1,12 +1,10 @@
 package com.nikzzzn.hospitalclient.controller;
 
 import com.nikzzzn.hospitalclient.MainApplication;
+import com.nikzzzn.hospitalclient.controller.appointment.EditAppointmentController;
 import com.nikzzzn.hospitalclient.helper.Connector;
 import com.nikzzzn.hospitalclient.model.Appointment;
 import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.beans.property.ReadOnlyStringWrapper;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,10 +15,8 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;

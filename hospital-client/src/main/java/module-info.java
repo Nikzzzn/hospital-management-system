@@ -13,4 +13,10 @@ module com.nikzzzn.hospitalclient {
     opens com.nikzzzn.hospitalclient.controller to javafx.fxml;
     exports com.nikzzzn.hospitalclient.helper;
     opens com.nikzzzn.hospitalclient.helper to javafx.fxml;
+    exports com.nikzzzn.hospitalclient.controller.appointment;
+    opens com.nikzzzn.hospitalclient.controller.appointment to javafx.fxml;
+    exports com.nikzzzn.hospitalclient.controller.doctor;
+    opens com.nikzzzn.hospitalclient.controller.doctor to javafx.fxml;
+    exports com.nikzzzn.hospitalclient.controller.patient;
+    opens com.nikzzzn.hospitalclient.controller.patient to javafx.fxml;
 }
